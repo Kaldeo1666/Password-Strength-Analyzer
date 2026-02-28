@@ -5,22 +5,42 @@ function checkStrength() {
 
     let score = 0;
 
-    if (password.length >= 8) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[!@#$%^&*]/.test(password)) score++;
+    document.getElementById("length").style.color =
+    password.length >= 8 ? "green" : "red";
 
-    if (score === 0) {
+document.getElementById("uppercase").style.color =
+    /[A-Z]/.test(password) ? "green" : "red";
+
+document.getElementById("number").style.color =
+    /[0-9]/.test(password) ? "green" : "red";
+
+document.getElementById("special").style.color =
+    /[^A-Za-z0-9]/.test(password) ? "green" : "red";
+
+    // Length scoring
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+
+    // Character variety
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    // Strength levels
+    if (password.length === 0) {
         strengthText.innerText = "";
         strengthBar.style.width = "0%";
-    } 
-    else if (score <= 2) {
+        return;
+    }
+
+    if (score <= 2) {
         strengthText.innerText = "Weak";
         strengthText.style.color = "red";
         strengthBar.style.width = "33%";
         strengthBar.style.background = "red";
     } 
-    else if (score === 3) {
+    else if (score <= 4) {
         strengthText.innerText = "Medium";
         strengthText.style.color = "orange";
         strengthBar.style.width = "66%";
